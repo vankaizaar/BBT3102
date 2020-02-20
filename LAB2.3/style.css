@@ -1,0 +1,89 @@
+body{
+    background:#e7deb4;
+    color:#1e1e1e;
+    margin:0;
+    padding:0;
+    font-family:sans-serif;
+}
+.container{
+    margin:0 auto;            
+    max-width:30rem;
+    min-height:100vh;
+    padding-top: 2rem;
+}
+button{
+    font-weight:bold;
+    background:blue;
+    color:white;
+    border:none;
+    padding:0.5rem 1rem;
+    text-transform:uppercase;
+    border-radius:2.5px;
+}
+form,table,input{
+    width:100%;
+    overflow: none;
+}
+
+button:hover{
+    font-weight:bold;
+    background:rgba(0, 0, 255, 0.637);
+    color:white;
+    border:none;
+    padding:0.5rem 1rem;
+    text-transform:uppercase;
+    border-radius:2.5px;
+}
+
+input[type=text],input[type=password]{
+    border:none;
+    padding:10px 5px;
+    margin: 0.5rem 0rem;
+}
+
+.btn{
+    margin:2rem 0rem;
+    border-radius:2.5px;
+    display: inline-block;
+    background: rgb(47, 167, 214);
+    padding:0.5rem 1rem;
+    text-decoration: none;
+    font-weight: bold;
+    color: white;
+}
+
+.btn:hover{
+    background:rgba(47, 167, 214,0.6);
+}
+
+h1{
+    margin-top: 0;
+}
+
+hr{
+    margin: 2rem 0;
+    color: whitesmoke;    
+}
+.user-list{
+    margin-top: 2rem;
+}
+
+.user-list thead{
+   font-weight: bold;
+   color: whitesmoke;
+   background: #1e1e1e;
+   text-align: center;
+   padding:0.5rem 0rem;
+}
+
+.user-list thead td{    
+    padding:0.5rem 0rem;
+ }
+
+.user-list tbody{
+    font-weight: lighter;
+    color: whitesmoke;
+    background: rgb(71, 71, 71);
+    text-align: center;
+    font-size: small;
+ }
