@@ -15,8 +15,9 @@ class DBConnector
          * https://www.php.net/manual/en/function.mysql-connect.php
          *
          */
-        $this->conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME) or die ("Could not connect to mysql");        
-
+        $this->conn = mysqli_connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME) or die ("Could not connect to mysql");
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+        $this->conn->set_charset("utf8mb4");
     }
     
 
