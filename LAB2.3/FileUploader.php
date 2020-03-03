@@ -1,5 +1,14 @@
 <?php
-#Refer to https://owasp.org/www-community/vulnerabilities/Unrestricted_File_Upload
+# Refer to https://owasp.org/www-community/vulnerabilities/Unrestricted_File_Upload
+#   FORM VALIDATION ERROR CODES
+#   0 => 'There is no error, the file uploaded with success'
+#   1 => 'The uploaded file exceeds the upload_max_filesize directive in php.ini'
+#   2 => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form'
+#   3 => 'The uploaded file was only partially uploaded'
+#   4 => 'No file was uploaded'
+#   6 => 'Missing a temporary folder'
+#   7 => 'Failed to write file to disk.'
+#   8 => 'A PHP extension stopped the file upload.'
 
 
 class FileUploader
@@ -14,16 +23,6 @@ class FileUploader
     private $file_size;
     private $file_error;
     private $final_file_name;
-    private $phpFileUploadErrors = array(
-        0 => 'There is no error, the file uploaded with success',
-        1 => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
-        2 => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',
-        3 => 'The uploaded file was only partially uploaded',
-        4 => 'No file was uploaded',
-        6 => 'Missing a temporary folder',
-        7 => 'Failed to write file to disk.',
-        8 => 'A PHP extension stopped the file upload.',
-    );
 
     public function __construct($fileName, $fileTmpName, $fileSize, $fileType, $fileExtension, $fileErrors)
     {

@@ -23,12 +23,13 @@ if (isset($_POST['btn-save'])) {
     $user = new User($first_name, $last_name, $city, $username, $password);
     //Creating new file upload instance
     $uploader = new FileUploader($fileName, $fileTmpName, $fileSize, $fileType, $fileExtension, $fileErrors);
-
+    //validating user input
     if (!$user->validateForm()) {
         $user->createFormErrorSessions();
         header('Location: ' . $_SERVER['HTTP_REFERER']);
         die();
     }
+    //check if username already exists
     if ($user->isUserExist()) {
         $user->createUsernameErrorSessions();
         header('Location: ' . $_SERVER['HTTP_REFERER']);
@@ -42,28 +43,29 @@ if (isset($_POST['btn-save'])) {
         header('Location: ' . $_SERVER['HTTP_REFERER']);
         die();
     }
-
+    //check if file already exists
     if ($uploader->fileAlreadyExists($uploader)) {
         $errorMessage = "A file already exists by the chosen name. Select a different file or rename your file.";
         $uploader->createUploadFormErrorSessions($errorMessage);
         header('Location: ' . $_SERVER['HTTP_REFERER']);
         die();
     }
-
+    //check if file size is correct
     if (!$uploader->fileSizeIsCorrect($uploader)) {
         $errorMessage = "The maximum file size should be " . FileUploader::getFileSizeLimit() . " kB.";
         $uploader->createUploadFormErrorSessions($errorMessage);
         header('Location: ' . $_SERVER['HTTP_REFERER']);
         die();
     }
-
+    //check if file type is correct
     if (!$uploader->fileTypeIsCorrect($uploader)) {
         $errorMessage = "Only images are allowed as uploads. ";
         $uploader->createUploadFormErrorSessions($errorMessage);
         header('Location: ' . $_SERVER['HTTP_REFERER']);
         die();
     }
-
+    //Using Transactions to save data.
+    //These two statement return arrays of values for the user and the file to be saved
     $res = $user->save();
     $file_upload_response = $uploader->uploadFile($uploader);
 
@@ -111,7 +113,7 @@ if (isset($_POST['btn-save'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Lab 2</title>
+    <title>Lab 2.3</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="validate.css">
 </head>

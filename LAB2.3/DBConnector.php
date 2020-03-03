@@ -11,7 +11,7 @@ class DBConnector
     public function __construct()
     {
         /**
-         * mysql_connect function has been depricated and removed from PHP v7.0.0.
+         * mysql_connect function has been deprecated and removed from PHP v7.0.0.
          * https://www.php.net/manual/en/function.mysql-connect.php
          *
          */
@@ -19,7 +19,7 @@ class DBConnector
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         $this->conn->set_charset("utf8mb4");
     }
-    
+
 
     public function closeDatabase()
     {

@@ -9,7 +9,7 @@ if (isset($_POST['btn-save'])) {
     //Creating new user
     $user = new User($first_name, $last_name, $city);
 
-    if(!$user->validateForm()){
+    if (!$user->validateForm()) {
         $user->createFormErrorSessions();
         header("Refresh:0");
         die();
@@ -24,14 +24,14 @@ if (isset($_POST['btn-save'])) {
     } else {
         echo "An error occured!";
     }
-}else if(isset($_POST['btn-view-all'])){    
-        $displayTable = NULL;            
-        $users = User::readAll(); 
-        if ($users) {
-            $displayTable = $users;
-        } else {
-            echo "An error occured!";
-        }                      
+} else if (isset($_POST['btn-view-all'])) {
+    $displayTable = NULL;
+    $users = User::readAll();
+    if ($users) {
+        $displayTable = $users;
+    } else {
+        echo "An error occured!";
+    }
 }
 
 ?>
@@ -49,51 +49,54 @@ if (isset($_POST['btn-save'])) {
 
 <body>
 <div class="container">
-<div>
-<h1>Create user</h1>
-<form method="post" name="user_details" id="user_details" onsubmit="return ValidateForm()" action="<?php $_SERVER['PHP_SELF'] ?>">
-        <table>
-            <tr>
-                <td>
-                    <div id="form-errors">
-                        <?php 
+    <div>
+        <h1>Create user</h1>
+        <form method="post" name="user_details" id="user_details" onsubmit="return ValidateForm()"
+              action="<?php $_SERVER['PHP_SELF'] ?>">
+            <table>
+                <tr>
+                    <td>
+                        <div id="form-errors">
+                            <?php
                             session_start();
-                            if(!empty($_SESSION['form_errors'])){
+                            if (!empty($_SESSION['form_errors'])) {
                                 echo "" . $_SESSION['form_errors'];
                                 unset($_SESSION['form_errors']);
                             }
-                        ?>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input value=""  placeholder="First Name" type="text"  name="first_name" required>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input value="" placeholder="Last Name" type="text" name="last_name">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input value="" placeholder="City name" type="text" name="city_name">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <button type="submit" name="btn-save">SAVE</button>
-                </td>
-            </tr>
-        </table>
-    </form>
-</div>
+                            ?>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input value="" placeholder="First Name" type="text" name="first_name" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input value="" placeholder="Last Name" type="text" name="last_name">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input value="" placeholder="City name" type="text" name="city_name">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="submit" name="btn-save">SAVE</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
     <div>
         <h1>Display Users</h1>
         <form method="post">
             <tr>
-                <td><button type="submit" name="btn-view-all">View All Entries</button></td>
+                <td>
+                    <button type="submit" name="btn-view-all">View All Entries</button>
+                </td>
             </tr>
         </form>
         <?php
