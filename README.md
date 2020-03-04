@@ -34,3 +34,9 @@ CREATE TABLE btc3205.uploads(
         ON DELETE CASCADE
 );
 ```
+
+Alter database to allow storage of UTC + timestamp
+
+```mysql
+ALTER TABLE user ADD(utc_timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,tzoffset INT NOT NULL); 
+```
