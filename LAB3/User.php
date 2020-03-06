@@ -278,21 +278,64 @@ class User implements Crud, Authenticator
     }
 
     /**
-     * @param $time
-     * @return mixed
+     * Determine the users ip address.
+     * @return mixed|null
      */
-    static function getTimezoneDifference($time)
+    static function getUserIpAddress()
     {
-        date_default_timezone_set( "UTC" );
-        //$ip = $_SERVER['REMOTE_ADDR']; use this on a real server.
-        $ip = '197.232.37.10';
+        $ip_address = NULL;
+        if ($_SERVER['HTTP_CLIENT_IP'])
+            $ip_address = $_SERVER['HTTP_CLIENT_IP'];
+        else if ($_SERVER['HTTP_X_FORWARDED_FOR'])
+            $ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        else if ($_SERVER['HTTP_X_FORWARDED'])
+            $ip_address = $_SERVER['HTTP_X_FORWARDED'];
+        else if ($_SERVER['HTTP_FORWARDED_FOR'])
+            $ip_address = $_SERVER['HTTP_FORWARDED_FOR'];
+        else if ($_SERVER['HTTP_FORWARDED'])
+            $ip_address = $_SERVER['HTTP_FORWARDED'];
+        else if ($_SERVER['REMOTE_ADDR'])
+            $ip_address = $_SERVER['REMOTE_ADDR'];
+        else
+            $ip_address = FALSE;
+        //Check if local host ip, and inject test IP
+        return ($ip_address = "127.0.0.1") ? $ip_address = "8.8.8.8" : $ip_address;
+    }
+
+    /**
+     * Determine user timezone
+     * @param string $ip
+     * @return DateTimeZone
+     */
+
+    static function getUserTimeZone(string $ip): DateTimeZone
+    {
         $json = file_get_contents('http://ip-api.com/json/' . $ip);
+
         $ipData = json_decode($json, true);
-        $timezone = new DateTimeZone($ipData['timezone']);
-        var_dump($timezone);
-        var_dump(new DateTime());
-        $tzOffset = timezone_offset_get($timezone,new DateTime());
-        $offset = $tzOffset/60;
+
+        return new DateTimeZone($ipData['timezone']);
+    }
+
+    /**
+     * This function is used to compute the time difference in minutes from GMT. Takes in timezone
+     * if js is present else tries to compute from the connecting client IP.
+     *
+     * @param null $tz
+     * @return int
+     * @throws Exception
+     */
+    static function getTimezoneDifference($tz = NULL): int
+    {
+        date_default_timezone_set("UTC");
+
+        $ip = static::getUserIpAddress();
+
+        $timezone = is_null($tz) ? static::getUserTimeZone($ip) : new DateTimeZone($tz);
+
+        $tzOffset = timezone_offset_get($timezone, new DateTime());
+
+        $offset = $tzOffset / 60;
 
         return $offset;
     }

@@ -3,7 +3,6 @@ date_default_timezone_set("UTC");
 include_once 'User.php';
 include_once 'FileUploader.php';
 include_once 'DBConnector.php';
-
 if (isset($_POST['btn-save'])) {
     #user details from form
     $first_name = $_POST['first_name'];
@@ -12,13 +11,8 @@ if (isset($_POST['btn-save'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
     $time = time();
-    var_dump($time);
-    $phpTZ = User::getTimezoneDifference($time);
-    var_dump($phpTZ);
-    $utc_timestamp = empty($_POST['utc_timestamp']) ? $time : $_POST['utc_timestamp'];
-    $offset = empty($_POST['time_zone_offset']) ? $phpTZ : $_POST['time_zone_offset'];
-    var_dump($utc_timestamp);
-    var_dump($offset);
+    $utc_timestamp = empty($_POST['utc_timestamp']) ? $time : $_POST['utc_timestamp'];;
+    $offset = empty($_POST['time_zone_offset']) ? User::getTimezoneDifference() : User::getTimezoneDifference($_POST['time_zone_offset']);
 
     #file details from form
     $fileName = $_FILES['fileToUpload']['name'];
@@ -77,7 +71,6 @@ if (isset($_POST['btn-save'])) {
     //These two statement return arrays of values for the user and the file to be saved
     $res = $user->save();
     $file_upload_response = $uploader->uploadFile($uploader);
-    var_dump($res);
 
     try {
         $con = new DBConnector;
@@ -132,7 +125,7 @@ if (isset($_POST['btn-save'])) {
 <div class="container">
     <div>
         <h1>Create user</h1>
-        <form method="post" name="user_details" id="user_details" onsubmit="return ValidateForm()"
+        <form method="post" name="user_details" id="user_details" onsubmit="return window.ValidateForm()"
               action="<?php $_SERVER['PHP_SELF'] ?>" enctype="multipart/form-data">
             <table>
                 <tr>

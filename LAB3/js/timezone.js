@@ -1,26 +1,17 @@
 $(document).ready(function () {
-    var x = new Date();
-    // Get minutes UTC
-    var offset = x.getTimezoneOffset()*60*1000;
-    // Get current time in linux epoch
-    var timestamp = x.getTime();
-    // Convert time to UTC
-    //var utc_timestamp = timestamp + (60000 * offset);
-    // The lines below are used to set the forms hidden fields by referencing their DOM ids
-
-    var UTC = Math.floor(timestamp + offset);
-
-    $('#time_zone_offset').val(x.getTimezoneOffset());
-    $('#utc_timestamp').val(UTC);
-     console.log(UTC);
-    console.log(x.getTimezoneOffset());
-    /**
-     const now = new Date();
-     console.log(now.getHours());
-     console.log(now.getUTCHours());
-     console.log(now.getTimezoneOffset());
-     **/
-
-    //var tt = new Date();
-    //console.log(Math.floor((tt.getTime() - tt.getTimezoneOffset()*60*1000)))
+    let utcTimestamp = Math.floor(Date.now()/1000);
+    let clientTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    console.log(utcTimestamp);
+    console.log(clientTimeZone);
+    $('#time_zone_offset').val(clientTimeZone);
+    $('#utc_timestamp').val(utcTimestamp);
 });
+
+/**
+ Rewrote function so that timestamp and user timezone e.g "Africa/Nairobi" is sent in case js is available. So that only PHP computes time difference.
+
+ Reason being js computes the offset differently . e.g.
+
+ For Nairobi it will state -180 mins(from the users perspective) while if js is off PHP will compute 180(from GMT perspective). hence to standardize this we compute from GMT as opposed from client side.
+
+ **/
