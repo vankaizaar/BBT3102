@@ -1,5 +1,3 @@
-//Form to carry out form validation
-
 function validateForm() {
     var fname = document.forms["user_details"]["first_name"].value;
     var lname = document.forms["user_details"]["first_name"].value;

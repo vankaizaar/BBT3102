@@ -125,7 +125,7 @@ if (isset($_POST['btn-save'])) {
 <div class="container">
     <div>
         <h1>Create user</h1>
-        <form method="post" name="user_details" id="user_details" onsubmit="return window.ValidateForm()"
+        <form method="post" name="user_details" id="user_details" onsubmit="return validateForm()"
               action="<?php $_SERVER['PHP_SELF'] ?>" enctype="multipart/form-data">
             <table>
                 <tr>
@@ -205,7 +205,7 @@ if (isset($_POST['btn-save'])) {
     </div>
 </div>
 <script src="js/jquery-3.4.1.min.js"></script>
-<script src="js/validate.js"></script>
+<script src="./js/validate.js"></script>
 <script src="js/timezone.js"></script>
 </body>
 
